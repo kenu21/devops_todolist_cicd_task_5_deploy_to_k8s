@@ -55,7 +55,6 @@ jobs:
           resource-group: ${{ vars.AZURE_RESOURCE_GROUP }}
 
       - name: Helm Dry Run
-        working-directory: ./todoapp
         run: |
           helm install --dry-run --debug ${{ inputs.helm-release-name }} ./todoapp-*.tgz \
             -f ${{ inputs.helm-values-path }} \
@@ -69,7 +68,6 @@ jobs:
             --set todoapp.image.version="${{ inputs.version }}"
 
       - name: Deploy Helm
-        working-directory: ./todoapp
         run: |
           helm upgrade --install --atomic --wait --timeout 1800s --debug ${{ inputs.helm-release-name }} ./todoapp-*.tgz \
             -f ${{ inputs.helm-values-path }} \
